@@ -108,7 +108,7 @@ bool is_beginning_object_inside_array(yaml_token_t *previous_token,
          token->type == YAML_BLOCK_MAPPING_START_TOKEN;
 }
 
-int parse_it(struct test_case **test_cases, FILE *file, bool debug) {
+int parse_it(struct test_case **test_cases, char *test_data, int test_data_len, bool debug) {
   yaml_parser_t parser;
   yaml_event_t event;
   yaml_token_t token;
@@ -121,7 +121,7 @@ int parse_it(struct test_case **test_cases, FILE *file, bool debug) {
 
   yaml_parser_initialize(&parser);
 
-  yaml_parser_set_input_file(&parser, file);
+  yaml_parser_set_input_string(&parser, (const unsigned char*) test_data, test_data_len);
 
   do {
     previous_token = token;

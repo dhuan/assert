@@ -1,8 +1,8 @@
 #ifndef ASSERT_FILE_CONFIG
 #define ASSERT_FILE_CONFIG
+#include "assert.h"
 #include <stdbool.h>
 #include <stdio.h>
-#include "assert.h"
 
-int parse_it(struct test_case **test_cases, FILE *file, bool debug);
+int parse_it(struct test_case **test_cases, char *test_data, int test_data_len, bool debug);
 #endif

@@ -78,15 +78,8 @@ int main(int argc, char **argv) {
 
   struct test_case *test_cases = malloc(sizeof(struct test_case) * 2);
 
-  FILE *file = fopen(opts->file, "rb");
-
-  if (file == NULL) {
-    printf("Failed to read file!\n");
-
-    return 1;
-  }
-
-  int test_cases_length = parse_it(&test_cases, file, false);
+  int test_cases_length =
+      parse_it(&test_cases, opts->test_data, opts->test_data_len, false);
 
   for (int i = 0; i <= test_cases_length; i++) {
     if (run_test(&test_cases[i]) != 0) {

@@ -12,6 +12,8 @@ struct test_case {
 
 struct options {
   char *file;
+  char *test_data;
+  int test_data_len;
 };
 
 #endif
