@@ -108,7 +108,8 @@ bool is_beginning_object_inside_array(yaml_token_t *previous_token,
          token->type == YAML_BLOCK_MAPPING_START_TOKEN;
 }
 
-int parse_it(struct test_case **test_cases, char *test_data, int test_data_len, bool debug) {
+int parse_it(struct test_case **test_cases, char *test_data, int test_data_len,
+             bool debug) {
   yaml_parser_t parser;
   yaml_event_t event;
   yaml_token_t token;
@@ -121,7 +122,8 @@ int parse_it(struct test_case **test_cases, char *test_data, int test_data_len, 
 
   yaml_parser_initialize(&parser);
 
-  yaml_parser_set_input_string(&parser, (const unsigned char*) test_data, test_data_len);
+  yaml_parser_set_input_string(&parser, (const unsigned char *)test_data,
+                               test_data_len);
 
   do {
     previous_token = token;
@@ -174,6 +176,11 @@ int parse_it(struct test_case **test_cases, char *test_data, int test_data_len, 
 
     if (is_value && strcmp(key, "expect") == 0) {
       (*test_cases)[test_cases_length].expect = (char *)token.data.scalar.value;
+
+      int len = strlen((*test_cases)[test_cases_length].expect);
+      if (((*test_cases)[test_cases_length].expect[len - 1]) == '\n') {
+        (*test_cases)[test_cases_length].expect[len - 1] = '\0';
+      }
 
       continue;
     }
