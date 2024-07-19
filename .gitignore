@@ -1,3 +1,4 @@
 *.o
 libyaml
-dist
+dist/*
+!dist/.gitkeep

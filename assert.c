@@ -13,18 +13,22 @@ void wipe_line_break(char *str, int *len) {
   }
 }
 
-void exec(char *cmdBase, char **out) {
+int exec(char *cmdBase, char **out) {
   FILE *fp;
   char path[SIZEOF_MED_STR];
   int len;
   *out = NULL;
 
   char *cmd = malloc(SIZEOF_MED_STR);
+  if (cmd == NULL) {
+    return 1;
+  }
+
   snprintf(cmd, SIZEOF_MED_STR, "%s 2>&1", cmdBase);
 
   fp = popen(cmd, "r");
   if (fp == NULL) {
-    perror("Falhou fi!");
+    return 1;
   }
 
   char *str_temp;
@@ -33,27 +37,44 @@ void exec(char *cmdBase, char **out) {
       len = strlen(path) + 1;
       wipe_line_break(path, &len);
       *out = malloc(len);
+      if (*out == NULL) {
+        return 1;
+      }
+
       snprintf(*out, len, "%s", path);
 
       continue;
     }
 
     len = sizeof(char) * (strlen(*out) + strlen(path) + 2);
+
     str_temp = realloc(str_temp, len);
+    if (str_temp == NULL) {
+      return 1;
+    }
+
     snprintf(str_temp, len, "%s\n%s", *out, path);
 
     *out = realloc(*out, strlen(str_temp));
+    if (*out == NULL) {
+      return 1;
+    }
+
     snprintf(*out, strlen(str_temp), "%s", str_temp);
   }
 
   pclose(fp);
 
   free(cmd);
+
+  return 0;
 }
 
 int run_test(struct test_case *tc) {
   char *out;
-  exec(tc->exec, &out);
+  if (exec(tc->exec, &out) > 0) {
+    fprintf(stderr, "Failed to run command: %s\n", tc->exec);
+  }
 
   if (strcmp(out, tc->expect) == 0) {
     printf("✔ %s\n", tc->name);
