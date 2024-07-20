@@ -87,12 +87,26 @@ int run_test(struct test_case *tc) {
   return 0;
 }
 
+void print_usage(FILE *file) {
+  fprintf(file, "USAGE:\n\n$ assert test_data.yml\n");
+}
+
+void handle_options_parse_error(int err) {
+  if (err == OPTIONS_ERROR_NO_FILE_GIVEN) {
+    print_usage(stderr);
+
+    return;
+  }
+
+  fprintf(stderr, "Failed to parse options!\n");
+}
+
 int main(int argc, char **argv) {
   struct options *opts = malloc(sizeof(struct options));
   int options_parse_result = parse_options(opts, argc, argv);
 
   if (options_parse_result > 0) {
-    printf("Failed to parse options!\n");
+    handle_options_parse_error(options_parse_result);
 
     return 2;
   }

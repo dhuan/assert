@@ -1,8 +1,10 @@
 #include "assert.h"
+#include "options.h"
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define BUFFERSIZE 1
 #define ASSERT_TEST_BUFFER_SIZE 999999
@@ -47,6 +49,10 @@ int parse_options(struct options *opts, int argc, char **argv) {
     opts->file = argv[optind];
   } else {
     return 1;
+  }
+
+  if (opts->file == NULL) {
+      return OPTIONS_ERROR_NO_FILE_GIVEN;
   }
 
   char *test_data = malloc(ASSERT_TEST_BUFFER_SIZE);
