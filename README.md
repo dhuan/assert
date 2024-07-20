@@ -27,6 +27,27 @@ Outputs the following:
 tests cases. The data can be passed either as a file (`assert my_tests.yml`) or
 piped (`assert -`).
 
+# Installation from source
+
+The following will clone a few dependencies and install them:
+
+```sh
+$ make get_dependencies
+```
+
+And then we can compile the program with:
+
+```sh
+$ make build
+```
+
+If executed successfully, an `assert` executable should be available inside
+the `dist` folder:
+
+```sh
+$ dist/assert my_test_data.yml
+```
+
 ## LICENSE
 
 The MIT License (MIT)
