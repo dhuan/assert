@@ -27,7 +27,7 @@ Outputs the following:
 tests cases. The data can be passed either as a file (`assert my_tests.yml`) or
 piped (`assert -`).
 
-# Installation from source
+## Installation from source
 
 The following will clone a few dependencies and install them:
 
