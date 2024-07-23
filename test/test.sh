@@ -10,7 +10,14 @@ TMP2=$(mktemp)
 
 find test/cases | grep yml$ | grep -v expect_output.yml | while read TEST_CASE_FILE;
 do
-    EXPECT_OUTPUT_FILE=$(echo $TEST_CASE_FILE | sed s/.yml/.expect_output.yml/)
+    EXPECT_OUTPUT_FILE=$(echo $TEST_CASE_FILE | sed s/.yml/.expect_output.txt/)
+
+    if [ ! -f "${EXPECT_OUTPUT_FILE}" ]
+    then
+        printf "Output expectation file not found! (%s)\n" "${EXPECT_OUTPUT_FILE}"
+
+        exit 1
+    fi
 
     tail -n +2 < $EXPECT_OUTPUT_FILE > $TMP2
 
