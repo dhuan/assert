@@ -31,7 +31,7 @@ do
 
     ASSERT_STATUS_CODE_RESULT="$?"
 
-    if [ "$?" != "${EXPECT_STATUS_CODE}" ]
+    if [ "${ASSERT_STATUS_CODE_RESULT}" != "${EXPECT_STATUS_CODE}" ]
     then
         printf "Failed: %s\nExpected status code to be %s. Instead got %s\n." "${TEST_CASE_FILE}" "${EXPECT_STATUS_CODE}" "${ASSERT_STATUS_CODE_RESULT}"
 

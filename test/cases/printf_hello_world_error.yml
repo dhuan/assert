@@ -1,0 +1,7 @@
+tests:
+- name: Test printf
+  exec: printf "Hello, %s!" "world"
+  expect: Hello, world!
+- name: Test printf again
+  exec: printf "Hello, %s!" "world"
+  expect: Incorrect!

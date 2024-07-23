@@ -1,0 +1,5 @@
+1
+✔ Test printf
+✗ Test printf again
+Expected: Incorrect!
+Got:      Hello, world!
