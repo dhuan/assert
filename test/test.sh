@@ -1,3 +1,5 @@
+#!/bin/sh
+
 if [ -z "${ASSERT_PROGRAM}" ]
 then
     printf "\$ASSERT_PROGRAM missing!\n"
@@ -8,9 +10,9 @@ fi
 TMP=$(mktemp)
 TMP2=$(mktemp)
 
-find test/cases | grep yml$ | grep -v expect_output.yml | while read TEST_CASE_FILE;
+find test/cases | grep yml$ | grep -v expect_output.yml | while read -r TEST_CASE_FILE;
 do
-    EXPECT_OUTPUT_FILE=$(echo $TEST_CASE_FILE | sed s/.yml/.expect_output.txt/)
+    EXPECT_OUTPUT_FILE=$(echo "${TEST_CASE_FILE}" | sed s/.yml/.expect_output.txt/)
 
     if [ ! -f "${EXPECT_OUTPUT_FILE}" ]
     then
@@ -19,13 +21,13 @@ do
         exit 1
     fi
 
-    tail -n +2 < $EXPECT_OUTPUT_FILE > $TMP2
+    tail -n +2 < "${EXPECT_OUTPUT_FILE}" > "${TMP2}"
 
-    EXPECT_STATUS_CODE=$(head -n 1 < $EXPECT_OUTPUT_FILE)
+    EXPECT_STATUS_CODE=$(head -n 1 < "${EXPECT_OUTPUT_FILE}")
 
-    printf "TEST: %s\n" $TEST_CASE_FILE
+    printf "TEST: %s\n" "${TEST_CASE_FILE}"
 
-    $ASSERT_PROGRAM $TEST_CASE_FILE > $TMP
+    $ASSERT_PROGRAM "${TEST_CASE_FILE}" > "${TMP}"
 
     ASSERT_STATUS_CODE_RESULT="$?"
 
@@ -36,10 +38,10 @@ do
         exit 1
     fi
 
-    diff "$TMP" "$TMP2"
-    if [ "$?" != "0" ]
+    
+    if ! diff "$TMP" "$TMP2"
     then
-        printf "Expected output did not match! Check diff above.\n"
+        printf "✗ Expected output did not match! Check diff above.\n"
 
         exit 1
     fi
