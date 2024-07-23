@@ -8,3 +8,6 @@ clean_up_dependencies:
 
 build:
 	sh scripts/build.sh
+
+tests:
+	sh test/test.sh
