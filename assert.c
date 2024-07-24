@@ -31,7 +31,7 @@ int exec(char *cmdBase, char **out) {
     return 1;
   }
 
-  char *str_temp;
+  char *str_temp = malloc(1);
   while (fgets(path, sizeof path, fp) != NULL) {
     if (*out == NULL) {
       len = strlen(path) + 1;
@@ -66,6 +66,7 @@ int exec(char *cmdBase, char **out) {
   pclose(fp);
 
   free(cmd);
+  free(str_temp);
 
   return 0;
 }
