@@ -27,7 +27,7 @@ do
 
     printf "TEST: %s\n" "${TEST_CASE_FILE}"
 
-    $ASSERT_PROGRAM "${TEST_CASE_FILE}" > "${TMP}"
+    $ASSERT_PROGRAM "${TEST_CASE_FILE}" &> "${TMP}"
 
     ASSERT_STATUS_CODE_RESULT="$?"
 
@@ -38,7 +38,6 @@ do
         exit 1
     fi
 
-    
     if ! diff "$TMP" "$TMP2"
     then
         printf "✗ Expected output did not match! Check diff above.\n"

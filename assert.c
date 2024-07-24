@@ -116,7 +116,14 @@ int main(int argc, char **argv) {
   int test_cases_length =
       parse_it(&test_cases, opts->test_data, opts->test_data_len, false);
 
-  for (int i = 0; i <= test_cases_length; i++) {
+  if (test_cases_length < 1) {
+    fprintf(stderr, "No tests found! Check the manual to see how to properly "
+                    "define your test data.\n");
+
+    return 1;
+  }
+
+  for (int i = 0; i < test_cases_length; i++) {
     if (run_test(&test_cases[i]) != 0) {
       return 1;
     }

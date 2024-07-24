@@ -190,5 +190,5 @@ int parse_it(struct test_case **test_cases, char *test_data, int test_data_len,
     }
   } while (token.type != YAML_STREAM_END_TOKEN);
 
-  return test_cases_length;
+  return test_cases_length + 1;
 }
