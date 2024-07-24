@@ -4,5 +4,5 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-int parse_it(struct test_case **test_cases, char *test_data, int test_data_len, bool debug);
+int parse_test_data(struct test_case **test_cases, char *test_data, int test_data_len, bool debug);
 #endif

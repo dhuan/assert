@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-void debug_it(yaml_token_t *token) {
+void debug_yaml_token(yaml_token_t *token) {
   yaml_token_type_t token_type = token->type;
   char *str = "";
 
@@ -108,8 +108,8 @@ bool is_beginning_object_inside_array(yaml_token_t *previous_token,
          token->type == YAML_BLOCK_MAPPING_START_TOKEN;
 }
 
-int parse_it(struct test_case **test_cases, char *test_data, int test_data_len,
-             bool debug) {
+int parse_test_data(struct test_case **test_cases, char *test_data,
+                    int test_data_len, bool debug) {
   yaml_parser_t parser;
   yaml_event_t event;
   yaml_token_t token;
@@ -131,7 +131,7 @@ int parse_it(struct test_case **test_cases, char *test_data, int test_data_len,
     yaml_parser_scan(&parser, &token);
 
     if (debug) {
-      debug_it(&token);
+      debug_yaml_token(&token);
     }
 
     if (previous_token.type == YAML_KEY_TOKEN &&

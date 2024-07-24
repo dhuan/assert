@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
   struct test_case *test_cases = malloc(sizeof(struct test_case) * 2);
 
   int test_cases_length =
-      parse_it(&test_cases, opts->test_data, opts->test_data_len, false);
+      parse_test_data(&test_cases, opts->test_data, opts->test_data_len, false);
 
   if (test_cases_length < 1) {
     fprintf(stderr, "No tests found! Check the manual to see how to properly "
