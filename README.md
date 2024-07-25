@@ -27,6 +27,13 @@ Outputs the following:
 tests cases. The data can be passed either as a file (`assert my_tests.yml`) or
 piped (`assert -`).
 
+### Options
+
+```
+-f, --filter
+Run only tests that you want, based on the test name. Regex is supported.
+```
+
 ## Installation from source
 
 The following will clone a few dependencies and install them:

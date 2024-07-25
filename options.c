@@ -30,6 +30,7 @@ int parse_options(struct options *opts, int argc, char **argv) {
     int option_index = 0;
 
     static struct option long_options[] = {
+        {"filter", required_argument, NULL, 'f'},
         {NULL, 0, NULL, 0},
     };
 
@@ -40,6 +41,9 @@ int parse_options(struct options *opts, int argc, char **argv) {
     }
 
     switch (c) {
+    case 'f':
+      opts->filter = optarg;
+      break;
     default:
       break;
     }

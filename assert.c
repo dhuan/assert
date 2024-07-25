@@ -1,17 +1,11 @@
 #include "assert.h"
+#include "common.h"
 #include "config.h"
 #include "options.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-void wipe_line_break(char *str, int *len) {
-  if (str[(*len) - 2] == '\n') {
-    str[(*len) - 2] = '\0';
-    *len = (*len) - 1;
-  }
-}
 
 int exec(char *cmdBase, char **out) {
   FILE *fp;
@@ -89,7 +83,31 @@ int run_test(struct test_case *tc) {
 }
 
 void print_usage(FILE *file) {
-  fprintf(file, "USAGE:\n\n$ assert test_data.yml\n");
+  fprintf(file,
+          "USAGE:\n\n"
+          "$ assert test_data.yml\n\n"
+          "Or:"
+          "\n"
+          "\n"
+          "$ assert - < test_data.yml"
+          "\n"
+          "\n"
+          "OPTIONS:\n"
+          "\n"
+          "-f, --filter\n"
+          "Run only tests that you want, based on the test name. Regex "
+          "is supported.\n"
+          "\n"
+          "\n"
+          "TEST DATA EXAMPLE:"
+          "\n"
+          "\n"
+          "tests:\n"
+          "- name: Test printf\n"
+          "  exec: printf \"Hello, %s!\" \"world\"\n"
+          "  expect: Hello, world!\n"
+          "\n",
+          "%s");
 }
 
 void handle_options_parse_error(int err) {
@@ -117,6 +135,8 @@ int main(int argc, char **argv) {
   int test_cases_length =
       parse_test_data(&test_cases, opts->test_data, opts->test_data_len, false);
 
+  bool has_filter = !(opts->filter == NULL);
+
   if (test_cases_length < 1) {
     fprintf(stderr, "No tests found! Check the manual to see how to properly "
                     "define your test data.\n");
@@ -125,6 +145,10 @@ int main(int argc, char **argv) {
   }
 
   for (int i = 0; i < test_cases_length; i++) {
+    if (has_filter && !regex_match(opts->filter, test_cases[i].name)) {
+      continue;
+    }
+
     if (run_test(&test_cases[i]) != 0) {
       return 1;
     }
