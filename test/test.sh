@@ -27,7 +27,9 @@ do
 
     printf "TEST: %s\n" "${TEST_CASE_FILE}"
 
-    $ASSERT_PROGRAM "${TEST_CASE_FILE}" &> "${TMP}"
+    ASSERT_FLAGS=$(head -n 1 < "${TEST_CASE_FILE}" | awk '{sub(/# ?/, "")}1')
+
+    $ASSERT_PROGRAM ${ASSERT_FLAGS} "${TEST_CASE_FILE}" &> "${TMP}"
 
     ASSERT_STATUS_CODE_RESULT="$?"
 

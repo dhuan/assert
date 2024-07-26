@@ -1,3 +1,4 @@
+#
 tests:
 - name: Test printf
   exec: printf "Hello, %s!" "world"

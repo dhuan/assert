@@ -1,0 +1,11 @@
+# -f TWO
+tests:
+- name: Test ONE
+  exec: printf "Hello, %s!" "world"
+  expect: Hello, world!
+- name: Test TWO
+  exec: printf "Hello, %s!" "world"
+  expect: Hello, world!
+- name: Test THREE
+  exec: printf "Hello, %s!" "world"
+  expect: Hello, WORLD!
