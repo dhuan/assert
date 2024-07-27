@@ -16,7 +16,7 @@ jobs:
         sparse-checkout: .
     - name: Run tests
       run: |
-        cd find $GITHUB_WORKSPACE
+        cd $GITHUB_WORKSPACE
         apt update -y
         apt install -y \
             make git binutils autoconf automake autotools-dev csh g++ libtool
