@@ -18,21 +18,15 @@ fi
 
 CONTAINER_ID=$(${CONTAINER_PROGRAM} ps -q --last 1)
 
+git archive --format=tgz HEAD | \
+    ${CONTAINER_PROGRAM} exec -i "${CONTAINER_ID}" tar xz -C /root
+
 ${CONTAINER_PROGRAM} exec -i "${CONTAINER_ID}" sh <<EOF
     set -e
     apt update -y
     apt install -y \
         make git binutils autoconf automake autotools-dev csh g++ libtool
-EOF
-
-${CONTAINER_PROGRAM} exec -i "${CONTAINER_ID}" mkdir /root/assert
-
-git archive --format=tgz HEAD | \
-    ${CONTAINER_PROGRAM} exec -i "${CONTAINER_ID}" tar xz -C /root/assert
-
-${CONTAINER_PROGRAM} exec -i "${CONTAINER_ID}" sh <<EOF
-    set -e
-    cd /root/assert
+    cd /root
     make get_dependencies
     make build
     ASSERT_PROGRAM=dist/assert make tests
