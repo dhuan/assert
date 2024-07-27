@@ -15,4 +15,11 @@ jobs:
       with:
         sparse-checkout: .
     - name: Run tests
-      run: find $GITHUB_WORKSPACE
+      run: |
+        cd find $GITHUB_WORKSPACE
+        apt update -y
+        apt install -y \
+            make git binutils autoconf automake autotools-dev csh g++ libtool
+        make get_dependencies
+        make build
+        ASSERT_PROGRAM=dist/assert make tests
