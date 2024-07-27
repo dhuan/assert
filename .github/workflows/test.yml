@@ -12,11 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-      with:
-        sparse-checkout: .
     - name: Run tests
       run: |
         cd $GITHUB_WORKSPACE
+        find .
         sudo apt update -y
         sudo apt install -y \
             make git binutils autoconf automake autotools-dev csh g++ libtool
