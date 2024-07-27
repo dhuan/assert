@@ -29,7 +29,7 @@ do
 
     ASSERT_FLAGS=$(head -n 1 < "${TEST_CASE_FILE}" | awk '{sub(/# ?/, "")}1')
 
-    $ASSERT_PROGRAM ${ASSERT_FLAGS} "${TEST_CASE_FILE}" &> "${TMP}"
+    $ASSERT_PROGRAM ${ASSERT_FLAGS} "${TEST_CASE_FILE}" > "${TMP}" 2>&1
 
     ASSERT_STATUS_CODE_RESULT="$?"
 
