@@ -17,8 +17,8 @@ jobs:
     - name: Run tests
       run: |
         cd $GITHUB_WORKSPACE
-        apt update -y
-        apt install -y \
+        sudo apt update -y
+        sudo apt install -y \
             make git binutils autoconf automake autotools-dev csh g++ libtool
         make get_dependencies
         make build
