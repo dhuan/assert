@@ -54,7 +54,7 @@ int exec(char *cmdBase, char **out) {
       return 1;
     }
 
-    snprintf(*out, strlen(str_temp), "%s", str_temp);
+    snprintf(*out, strlen(str_temp) + 1, "%s", str_temp);
   }
 
   pclose(fp);

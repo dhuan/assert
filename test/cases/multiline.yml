@@ -1,0 +1,7 @@
+#
+tests:
+- name: Test multiline
+  exec: printf "HELLO\nWORLD"
+  expect: |
+    HELLO
+    WORLD
